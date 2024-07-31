@@ -1,0 +1,39 @@
+- name: Installing Nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+# name: download and extract the frontend file
+#  ansible.builtin.unarchive:
+#    src: https://github.com/stans-robot-project/frontend/archive/main.zip
+#    dest: /tmp
+#    remote_src: yes
+
+- name: Download and unarchive
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: download
+
+- name: delete the file from nginx index.html
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: absent
+
+- name: copy the fronent file to nginx path
+  ansible.builtin.copy:
+    src: /tmp/frontend-main/static/
+    dest: /usr/share/ngnix/html/
+    remote_src: yes
+
+- name: copying roboshop configuration files
+  ansible.builtin.copy:
+    src: roboshop.conf
+    dest: /etc/nginx/default.d/roboshop.conf
+
+- name: restarting the nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+
