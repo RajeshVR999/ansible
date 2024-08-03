@@ -2,10 +2,10 @@
 Description = user Service
 [Service]
 User=roboshop
-Environment=MONGO=true
-Environment=MONGO_URL="mongodb://ip-172-31-18-17.ap-southeast-1.compute.internal:27017/catalogue"
+Environment=REDIS_HOST="172.31.18.17"
+Environment=CATALOGUE_HOST="172.31.16.148"
 ExecStart=/bin/node /home/roboshop/user/server.js
-SyslogIdentifier=user
+SyslogIdentifier=cart
 
 [Install]
 WantedBy=multi-user.target
