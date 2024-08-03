@@ -1,0 +1,21 @@
+- name: Download and unarchive
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: download
+
+- name: Installing redis
+  ansible.builtin.package:
+    name: redis
+    state: present
+
+- name: Update mongodb configuration
+  ansible.builtin.replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: restarting the redis
+  ansible.builtin.service:
+    name: redis
+    state: restarted
+    enabled: yes
