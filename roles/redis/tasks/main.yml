@@ -18,3 +18,8 @@
     name: redis
     state: restarted
     enabled: yes
+
+- name: Setting up hostname
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: set-hostname
