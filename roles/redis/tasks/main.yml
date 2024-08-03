@@ -1,20 +1,19 @@
-- name: Download and unarchive
-  ansible.builtin.include_role:
-    name: common
-    tasks_from: download
+- name: Copying the redis file
+  ansible.builtin.copy:
+    src: redis.repo
 
 - name: Installing redis
   ansible.builtin.package:
-    name: redis
+    name: redis-6.2.7
     state: present
 
 - name: Update mongodb configuration
   ansible.builtin.replace:
-    path: /etc/mongod.conf
+    path: /etc/redis/redis.conf
     regexp: '127.0.0.1'
     replace: '0.0.0.0'
 
-- name: restarting the redis
+- name: restarting the redis service
   ansible.builtin.service:
     name: redis
     state: restarted
