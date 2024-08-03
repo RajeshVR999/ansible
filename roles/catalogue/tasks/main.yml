@@ -42,9 +42,9 @@
 
 - name: Restart the nginx
   ansible.builtin.systemd:
-    name: "{{COMPONENT}}"
     state: restarted
-    deamon_reload: true
+    daemon_reload: true
+    name: "{{COMPONENT}}"
 
 
 
